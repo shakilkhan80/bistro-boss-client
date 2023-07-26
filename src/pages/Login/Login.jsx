@@ -6,6 +6,7 @@ import { AuthContext } from '../../Providers/AuthProviders';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import Swal from 'sweetalert2';
+import SocialLogin from '../SignUp/SocialLogin';
 
 const Login = () => {
 
@@ -13,6 +14,7 @@ const Login = () => {
     const { signIn } = useContext(AuthContext)
     const navigate = useNavigate()
     const location = useLocation()
+    const [error, setError] = useState()
 
     const from = location.state?.from?.pathname || "/"
 
@@ -27,7 +29,7 @@ const Login = () => {
                 const user = result.user;
                 console.log(user)
                 Swal.fire({
-                    title: 'User Login Successfully',
+                    title: 'User Login  Successfully',
                     showClass: {
                         popup: 'animate__animated animate__fadeInDown'
                     },
@@ -36,9 +38,10 @@ const Login = () => {
                     }
                 })
                 navigate(from, { replace: true })
+
             })
             .catch(error => {
-                console.log(error.message)
+                setError('Your Password Is Wrong', error)
             })
     }
     useEffect(() => {
@@ -62,12 +65,12 @@ const Login = () => {
             </Helmet>
             <div className=" login-item  hero min-h-screen ">
                 <div className="hero-content flex-col lg:flex-row">
-                    <div className="text-center w-1/3 mr-5">
+                    <div className="text-center w-2/3 mr-5">
                         <h1 className="text-5xl font-bold mb-5">Login now!</h1>
                         <img src={img} alt="" />
                     </div>
-                    <div className="card  w-1/2 max-w-sm shadow-2xl ">
-                        <form onSubmit={handleLogin} className="card-body">
+                    <div className="card  w-1/2 max-w-xl shadow-2xl ">
+                        <form onSubmit={handleLogin} className="card-body sm:w-full">
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Email</span>
@@ -79,6 +82,7 @@ const Login = () => {
                                     <span className="label-text">Password</span>
                                 </label>
                                 <input type="password" name='password' placeholder="Enter Your Password" className="input input-bordered" />
+                                <p className='text-red-400'>{error}</p>
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
@@ -89,11 +93,13 @@ const Login = () => {
                                 </label>
                                 <input onBlur={handleValidateCaptcha} type="text" name='captcha' placeholder="Type the text above" className="input input-bordered" />
                             </div>
+                            {/* make button disable for captcha */}
                             <div className="form-control mt-6">
-                                <input disabled={disabled} className="btn text-white bg-[#D1A054]" type="submit" value="Login" />
+                                <input disabled={false} className="btn text-white bg-[#D1A054]" type="submit" value="Login" />
                             </div>
                         </form>
                         <p className='mb-5 ml-5 text-[#D1A054] text-center'><small>New Here? Create a New Account: <Link className='text-green-600' to="/signup">Sign Up</Link><br />or Sign In With</small> </p>
+                        <SocialLogin></SocialLogin>
                     </div>
                 </div>
             </div>

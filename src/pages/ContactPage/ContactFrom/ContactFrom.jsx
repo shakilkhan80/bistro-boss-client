@@ -3,7 +3,7 @@ import React from 'react';
 const ContactFrom = () => {
     return (
         <div className="hero">
-            <div className="card shadow-2xl bg-[#E8E8E8]  w-full">
+            <div className="card shadow-2xl bg-[#E8E8E8]">
                 <div className="card-body">
                     <div className='flex gap-3 w-[1200px]'>
                         <div className="form-control w-1/2">
@@ -23,7 +23,7 @@ const ContactFrom = () => {
                         <label className="label">
                             <span className="label-text font-bold">Phone*</span>
                         </label>
-                        <input type="text" placeholder="Enter Your Phone Number" className="input input-bordered mr-4" />
+                        <input type="text" placeholder="Enter Your Phone Number" className="input input-bordered w-full  mr-4" />
                     </div>
                     <div className="form-control">
                         <label className="label">

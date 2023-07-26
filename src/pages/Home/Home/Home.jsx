@@ -17,9 +17,13 @@ const Home = () => {
             </Helmet>
             <Banner></Banner>
             <Category></Category>
-            <BistroTitle></BistroTitle>
+            <div className="sm:hidden">
+                <BistroTitle></BistroTitle>
+            </div>
             <PopularMenu></PopularMenu>
-            <ContactUs></ContactUs>
+            <div className="sm:hidden">
+                <ContactUs></ContactUs>
+            </div>
             <Recommendes></Recommendes>
             <Featured></Featured>
             <Testimonials></Testimonials>

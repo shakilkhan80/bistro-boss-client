@@ -3,6 +3,7 @@ import img1 from '../../assets/menu/salad-bg.jpg'
 import img2 from '../../assets/menu/soup-bg.jpg'
 import img3 from '../../assets/menu/dessert-bg.jpeg'
 import SectionTitle from '../../components/SectionTilte/SectionTitle';
+import { Link } from 'react-router-dom';
 
 const Recommendes = () => {
     return (
@@ -21,7 +22,7 @@ const Recommendes = () => {
                         <h2 className="card-title">Ceaser Salad</h2>
                         <p>Lettuce, Eggs, Parmesan Cheese, Chicken Breast Fillets.</p>
                         <div className="card-actions">
-                            <button className="btn bg-slate-300 border-orange-400  btn-outline border-0 border-b-4">Add to Cart</button>
+                            <Link to='/menu'><button className="btn bg-slate-300 border-orange-400 btn-outline border-0 border-b-4">Order Now</button></Link>
                         </div>
                     </div>
                 </div>
@@ -33,7 +34,7 @@ const Recommendes = () => {
                         <h2 className="card-title">Spicy Soup</h2>
                         <p>Lettuce, Eggs, Parmesan Cheese, Chicken Breast Fillets.</p>
                         <div className="card-actions">
-                            <button className="btn bg-slate-300 border-orange-400  btn-outline border-0 border-b-4">Add to Cart</button>
+                            <Link to='/menu'><button className="btn bg-slate-300 border-orange-400 btn-outline border-0 border-b-4">Order Now</button></Link>
                         </div>
                     </div>
                 </div>
@@ -45,7 +46,7 @@ const Recommendes = () => {
                         <h2 className="card-title">Dessert Special</h2>
                         <p>Lettuce, Eggs, Parmesan Cheese, Chicken Breast Fillets.</p>
                         <div className="card-actions">
-                            <button className="btn bg-slate-300 border-orange-400 btn-outline border-0 border-b-4">Add to Cart</button>
+                            <Link to='/menu'><button className="btn bg-slate-300 border-orange-400 btn-outline border-0 border-b-4">Order Now</button></Link>
                         </div>
                     </div>
                 </div>

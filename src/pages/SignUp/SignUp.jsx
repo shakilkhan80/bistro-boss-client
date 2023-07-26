@@ -1,37 +1,54 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import img from "../../assets/others/authentication1.png"
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { Helmet } from 'react-helmet-async';
-import { AuthContext } from '../../Providers/AuthProviders';
 import Swal from 'sweetalert2';
+import SocialLogin from './SocialLogin';
+import useAuth from '../../Hooks/useAuth';
 
 const SignUp = () => {
 
 
     const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm()
 
-    const { createUser, updateUserProfile } = useContext(AuthContext)
+    const { createUser, updateUserProfile } = useAuth();
     const navigate = useNavigate();
 
     const onSubmit = (data) => {
-        console.log(data)
+
         createUser(data.email, data.password)
             .then(result => {
                 const loggedUser = result.user
                 console.log(loggedUser)
+
                 updateUserProfile(data.name, data.photoURL)
                     .then(() => {
-                        console.log('user updated success')
-                        reset()
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'User created Successfully',
-                            showConfirmButton: false,
-                            timer: 1500
+
+                        const saveUser = { name: data.name, email: data.email }
+
+                        fetch('https://bistro-boss-server-ten-inky.vercel.app/users', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(saveUser)
                         })
-                        navigate('/')
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.insertedId) {
+                                    reset()
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        title: 'User created Successfully',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                    navigate('/')
+                                }
+                            })
+
                     })
                     .catch(error => {
                         console.log(error)
@@ -47,14 +64,14 @@ const SignUp = () => {
             <Helmet>
                 <title>Bistro || Sign UP</title>
             </Helmet>
-            <div className=" login-item  gap-10 hero min-h-screen ">
+            <div className=" login-item space-x-10 hero min-h-screen ">
                 <div className="hero-content flex-col lg:flex-row-reverse">
-                    <div className="text-center w-1/3">
+                    <div className="text-center w-2/3">
                         <h1 className="text-5xl font-bold mb-5">Sign Up Now!</h1>
                         <img src={img} alt="" />
                     </div>
-                    <div className="card  w-1/2 max-w-sm shadow-2xl ">
-                        <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+                    <div className="card  w-1/2 max-w-xl shadow-2xl ">
+                        <form onSubmit={handleSubmit(onSubmit)} className="card-body sm:w-full">
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Name</span>
@@ -95,8 +112,10 @@ const SignUp = () => {
                                 <input className="btn text-white bg-[#D1A054]" type="submit" value="Sign Up" />
                             </div>
                         </form>
-                        <p className='text-[#D1A054] ml-5 mb-5 text-center'><small>Already registered? Go to: <Link className='text-green-600' to="/login">Log In</Link><br /> or Sign Up With</small></p>
+                        <p className='text-[#D1A054] ml-5 text-center'><small>Already registered? Go to: <Link className='text-green-600' to="/login">Log In</Link><br /> or Sign Up With</small></p>
+                        <SocialLogin></SocialLogin>
                     </div>
+
                 </div>
             </div>
         </>
